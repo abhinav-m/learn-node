@@ -1,14 +1,36 @@
-console.log('Starting app.');
-
 const fs = require('fs');
 const _ = require('lodash'); //Order of operations:  Node first tries to find in its core modules, not there then tries to look it up in the node_modules folder.
 const yargs = require('yargs')
 
 const notes = require('./notes');
 
-const argv = yargs.argv;
+const titleOptions = {
+    describe: 'The title of the note.',
+    demand: true,
+    alias: 't'
+}
 
-console.log(`Yarg ${yargs.argv}`)
+const bodyOptions = {
+    describe: 'The title of the note.',
+    demand: true,
+    alias: 'b'
+}
+
+const argv =
+    yargs.command('add', 'Adds a new note.', {
+        title: titleOptions,
+        body: bodyOptions
+    })
+    .command('list', 'Lists all notes')
+    .command('read', 'Read a note.', {
+        title: titleOptions
+    })
+    .command('remove', 'Removes a note.', {
+        title: titleOptions
+    })
+    .help() //Add the --help flag for the same.
+    .argv;
+
 
 const command = argv._[0]
 
