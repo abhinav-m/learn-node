@@ -14,12 +14,13 @@ const command = argv._[0]
 
 switch (command) {
     case 'add':
-        let note = notes.addNote(argv.title, argv.body);
+        let noteAdded = notes.addNote(argv.title, argv.body);
         note ? console.log(`Note added successfuly. \n-- \nTitle:${note.title} , \nBody:${note.body}`) : console.log(`Note already exists.`);
         break;
 
     case 'read':
-        notes.read(argv.title)
+        let noteRead = notes.read(argv.title);
+        noteRead ? console.log(`Note read: \n-- \nTitle:${noteRead.title} \nBody:${noteRead.body}`) : console.log('Note not found.')
         break;
 
     case 'list':
@@ -27,7 +28,7 @@ switch (command) {
         break;
 
     case 'remove':
-        notes.removeNote(argv.title);
+        notes.removeNote(argv.title) ? console.log('Note removed.') : console.log('Note not found.')
         break;
     default:
         console.log('Command not recognized');

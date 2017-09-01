@@ -35,7 +35,14 @@ var addNote = (title, body) => {
 };
 
 var removeNote = (title) => {
-    console.log('Removing note ', title)
+    var notes = fetchNotes();
+    var filtered = notes.filter(note => note.title !== title)
+    if (filtered.length === notes.length) {
+        return false;
+    } else {
+        saveNotes(filtered);
+        return true;
+    }
 };
 
 var list = () => {
@@ -43,7 +50,10 @@ var list = () => {
 }
 
 var read = (title) => {
-    console.log('Reading', title)
+    var notes = fetchNotes();
+    var noteFound = notes.filter(note => note.title === title)
+    if (noteFound.length !== 0)
+        return noteFound[0];
 }
 
 /*ES6 syntax for adding and removing properties to an object.
