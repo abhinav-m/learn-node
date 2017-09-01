@@ -14,7 +14,8 @@ const command = argv._[0]
 
 switch (command) {
     case 'add':
-        notes.addNote(argv.title, argv.body);
+        let note = notes.addNote(argv.title, argv.body);
+        note ? console.log(`Note added successfuly. \n-- \nTitle:${note.title} , \nBody:${note.body}`) : console.log(`Note already exists.`);
         break;
 
     case 'read':
