@@ -15,7 +15,7 @@ const command = argv._[0]
 switch (command) {
     case 'add':
         let noteAdded = notes.addNote(argv.title, argv.body);
-        note ? console.log(`Note added successfuly. \n-- \nTitle:${note.title} , \nBody:${note.body}`) : console.log(`Note already exists.`);
+        noteAdded ? console.log(`Note added successfuly. \n-- \nTitle:${noteAdded.title} , \nBody:${noteAdded.body}`) : console.log(`Note already exists.`);
         break;
 
     case 'read':
@@ -24,7 +24,13 @@ switch (command) {
         break;
 
     case 'list':
-        console.log('Listing notes');
+        let allNotes = notes.getAll();
+        if (allNotes.length) {
+            console.log(`Printing ${allNotes.length} note(s).`)
+            allNotes.forEach(v => console.log(`-- \nTitle:${v.title}, \nBody:${v.body} `))
+
+        } else
+            console.log('No notes.')
         break;
 
     case 'remove':

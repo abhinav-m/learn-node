@@ -2,6 +2,11 @@ console.log(' Starting notes.js');
 
 const fs = require('fs')
 
+var getAll = () => {
+    return fetchNotes();
+}
+
+
 var fetchNotes = () => {
 
     try {
@@ -24,7 +29,6 @@ var addNote = (title, body) => {
         title,
         body
     }
-
     var duplicateNotes = notes.filter(note => note.title === title);
     if (duplicateNotes.length === 0) {
         notes.push(note);
@@ -45,11 +49,9 @@ var removeNote = (title) => {
     }
 };
 
-var list = () => {
-    console.log('Listing all notes')
-}
 
 var read = (title) => {
+    debugger;
     var notes = fetchNotes();
     var noteFound = notes.filter(note => note.title === title)
     if (noteFound.length !== 0)
@@ -67,6 +69,6 @@ addNote: addNote,
 module.exports = {
     addNote,
     removeNote,
-    list,
+    getAll,
     read
 }
