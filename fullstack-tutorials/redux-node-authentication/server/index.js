@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const app = express();
 const router = require('./router');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 // DB setup
 mongoose.connect('mongodb://localhost/auth');
@@ -14,6 +15,8 @@ mongoose.connect('mongodb://localhost/auth');
 //middleware of express. incoming requests will be passed to into both morgan and bodyparser.
 app.use(morgan('combined')); //Logging requests sent to server.
 app.use(bodyParser.json({type: '*/*'})); // parses request to JSON.
+app.use(cors());
+
 router(app);
 //Server setup
 const port = process.env.PORT || 3090;
