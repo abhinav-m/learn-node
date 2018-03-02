@@ -1,29 +1,33 @@
-const request = require('request');
+const request = require("request");
 
-var geocodeAddress = (address, callback) => {
-    const encodedAddress = encodeURIComponent(address);
-    const apiUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
-    const url = apiUrl + encodedAddress;
+var geocodeAddress = address => {
+  const encodedAddress = encodeURIComponent(address);
+  const apiUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=";
+  const url = apiUrl + encodedAddress;
 
-    request({
+  return new Promise((resolve, reject) => {
+    request(
+      {
         url: url,
         json: true
-    }, (err, response, body) => {
+      },
+      (err, response, body) => {
         if (err) {
-            callback('Unable to connect to google servers.');
-        } else if (body.status === 'ZERO_RESULTS') {
-            callback('Unable to find address.');
-        } else if (body.status === 'OK') {
-            callback(undefined, {
-                address: body.results[0].formatted_address,
-                latitude: body.results[0].geometry.location.lat,
-                longitude: body.results[0].geometry.location.lng
-            });
+          reject("Unable to connect to google servers.");
+        } else if (body.status === "ZERO_RESULTS") {
+          reject("Unable to find address.");
+        } else if (body.status === "OK") {
+          resolve({
+            address: body.results[0].formatted_address,
+            latitude: body.results[0].geometry.location.lat,
+            longitude: body.results[0].geometry.location.lng
+          });
         }
-    });
-}
-
+      }
+    );
+  });
+};
 
 module.exports = {
-    geocodeAddress
-}
+  geocodeAddress
+};

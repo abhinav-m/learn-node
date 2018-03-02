@@ -14,24 +14,20 @@ const argv = yargs
   .help()
   .alias("help", "h").argv;
 
-geocoder.geocodeAddress(argv.address, (error, results) => {
-  if (error) {
-    console.log(error);
-  } else {
-    console.log(`Your address: ${results.address}`);
+geocoder.geocodeAddress(argv.address).then(results => {
+  console.log(`Your address: ${results.address}`);
 
-    const { latitude, longitude } = results;
+  const { latitude, longitude } = results;
 
-    weather.getWeather(latitude, longitude, (error, weatherResults) => {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log(
-          `It is ${weatherResults.temperature},but it feels like ${
-            weatherResults.apparentTemperature
-          }`
-        );
-      }
-    });
-  }
+  weather.getWeather(latitude, longitude, (error, weatherResults) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(
+        `It is ${weatherResults.temperature},but it feels like ${
+          weatherResults.apparentTemperature
+        }`
+      );
+    }
+  });
 });
