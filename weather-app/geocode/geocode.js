@@ -5,6 +5,7 @@ var geocodeAddress = address => {
   const apiUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=";
   const url = apiUrl + encodedAddress;
 
+  //Request api provided by node doesn't return a promise object, thus we wrap it in one here.
   return new Promise((resolve, reject) => {
     request(
       {
